@@ -1,0 +1,14 @@
+easy_admin:
+    entities:
+        Matches:
+          class: AppBundle\Entity\Match
+          label: 'Matches'
+          form:
+              fields:
+                  - { property: 'startedAt', type: 'datetime' }
+                  - { property: 'homeTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
+                  - { property: 'homeScore', type: 'number' }
+                  - { property: 'guestTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
+                  - { property: 'guestScore', type: 'number' }
+                  - { property: 'stadium', type: 'text' }
+                  - { property: 'status', type: 'text' }

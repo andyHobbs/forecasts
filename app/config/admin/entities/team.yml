@@ -1,0 +1,14 @@
+easy_admin:
+    entities:
+        Team:
+          class: AppBundle\Entity\Team
+          label: 'Teams'
+          list:
+              fields:
+                  - 'id'
+                  - { property: 'name', type: 'text' }
+                  - { property: 'logo', type: 'image', base_path: %app.path.team_logos% }
+          form:
+              fields:
+                  - { property: 'name', type: 'text' }
+                  - { property: 'logoFile', type: 'vich_image' }
