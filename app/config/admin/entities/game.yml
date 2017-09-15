@@ -1,9 +1,17 @@
 easy_admin:
     entities:
-        Matches:
-          class: AppBundle\Entity\Match
-          label: 'Matches'
+        Game:
+          class: AppBundle\Entity\Game
+          label: 'Games'
           form:
+          list:
+              fields:
+                  - 'id'
+                  - 'homeTeam'
+                  - 'guestTeam'
+                  - 'startedAt'
+                  - 'status'
+                  - 'stadium'
               fields:
                   - { property: 'startedAt', type: 'datetime' }
                   - { property: 'homeTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }

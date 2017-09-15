@@ -50,16 +50,16 @@ class Team
     private $logoFile;
 
     /**
-     * One Team has Many HomeMatches.
-     * @ORM\OneToMany(targetEntity="Game.php", mappedBy="homeTeam")
+     * One Team has Many home Games.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Game", mappedBy="homeTeam")
      */
-    //protected $homeMatches;
+    private $homeGames;
 
     /**
-     * One Team has Many guestMatches.
-     * @ORM\OneToMany(targetEntity="Game.php", mappedBy="guestTeam")
+     * One Team has Many guest Games.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Game", mappedBy="guestTeam")
      */
-    //protected $guestMatches;
+    private $guestGames;
 
     /**
      * Get id
@@ -138,11 +138,11 @@ class Team
     /**
      * Add homeMatch
      *
-     * @param \AppBundle\Entity\Match $homeMatch
+     * @param \AppBundle\Entity\Game $homeMatch
      *
      * @return Team
      */
-    public function addHomeMatch(\AppBundle\Entity\Match $homeMatch)
+    public function addHomeMatch(\AppBundle\Entity\Game $homeMatch)
     {
         $this->homeMatches[] = $homeMatch;
 
@@ -152,9 +152,9 @@ class Team
     /**
      * Remove homeMatch
      *
-     * @param \AppBundle\Entity\Match $homeMatch
+     * @param \AppBundle\Entity\Game $homeMatch
      */
-    public function removeHomeMatch(\AppBundle\Entity\Match $homeMatch)
+    public function removeHomeMatch(\AppBundle\Entity\Game $homeMatch)
     {
         $this->homeMatches->removeElement($homeMatch);
     }
@@ -172,11 +172,11 @@ class Team
     /**
      * Add guestMatch
      *
-     * @param \AppBundle\Entity\Match $guestMatch
+     * @param \AppBundle\Entity\Game $guestMatch
      *
      * @return Team
      */
-    public function addGuestMatch(\AppBundle\Entity\Match $guestMatch)
+    public function addGuestMatch(\AppBundle\Entity\Game $guestMatch)
     {
         $this->guestMatches[] = $guestMatch;
 
@@ -186,9 +186,9 @@ class Team
     /**
      * Remove guestMatch
      *
-     * @param \AppBundle\Entity\Match $guestMatch
+     * @param \AppBundle\Entity\Game $guestMatch
      */
-    public function removeGuestMatch(\AppBundle\Entity\Match $guestMatch)
+    public function removeGuestMatch(\AppBundle\Entity\Game $guestMatch)
     {
         $this->guestMatches->removeElement($guestMatch);
     }
@@ -201,6 +201,74 @@ class Team
     public function getGuestMatches()
     {
         return $this->guestMatches;
+    }
+
+    /**
+     * Add homeGame
+     *
+     * @param \AppBundle\Entity\Game $homeGame
+     *
+     * @return Team
+     */
+    public function addHomeGame(\AppBundle\Entity\Game $homeGame)
+    {
+        $this->homeGames[] = $homeGame;
+
+        return $this;
+    }
+
+    /**
+     * Remove homeGame
+     *
+     * @param \AppBundle\Entity\Game $homeGame
+     */
+    public function removeHomeGame(\AppBundle\Entity\Game $homeGame)
+    {
+        $this->homeGames->removeElement($homeGame);
+    }
+
+    /**
+     * Get homeGames
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHomeGames()
+    {
+        return $this->homeGames;
+    }
+
+    /**
+     * Add guestGame
+     *
+     * @param \AppBundle\Entity\Game $guestGame
+     *
+     * @return Team
+     */
+    public function addGuestGame(\AppBundle\Entity\Game $guestGame)
+    {
+        $this->guestGames[] = $guestGame;
+
+        return $this;
+    }
+
+    /**
+     * Remove guestGame
+     *
+     * @param \AppBundle\Entity\Game $guestGame
+     */
+    public function removeGuestGame(\AppBundle\Entity\Game $guestGame)
+    {
+        $this->guestGames->removeElement($guestGame);
+    }
+
+    /**
+     * Get guestGames
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGuestGames()
+    {
+        return $this->guestGames;
     }
 
     /**

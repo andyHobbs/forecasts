@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Match Entity
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  *
  */
-class Match
+class Game
 {
 
     /**
@@ -22,6 +23,26 @@ class Match
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     *
+     * @Assert\Expression(
+     *     "not (this.getHomeTeam() === this.getGuestTeam())",
+     *     message="Home team con not equal guest team."
+     * )
+     *
+     * Many Games have One home Team.
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="homeGames")
+     * @ORM\JoinColumn(name="home_team_id", referencedColumnName="id")
+     */
+    private $homeTeam;
+
+    /**
+     * Many Games have One guest Team.
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="guestGames")
+     * @ORM\JoinColumn(name="guest_team_id", referencedColumnName="id")
+     */
+    private $guestTeam;
 
     /**
      * @var integer $homeScore
@@ -51,7 +72,12 @@ class Match
      */
     private $status;
 
-
+    /**
+     * @var \DateTime $startedAt
+     *
+     * @ORM\Column(name="started_at", type="datetime")
+     */
+    private $startedAt;
 
     /**
      * Get id
@@ -68,7 +94,7 @@ class Match
      *
      * @param integer $homeScore
      *
-     * @return Match
+     * @return Game
      */
     public function setHomeScore($homeScore)
     {
@@ -92,7 +118,7 @@ class Match
      *
      * @param integer $guestScore
      *
-     * @return Match
+     * @return Game
      */
     public function setGuestScore($guestScore)
     {
@@ -116,7 +142,7 @@ class Match
      *
      * @param string $stadium
      *
-     * @return Match
+     * @return Game
      */
     public function setStadium($stadium)
     {
@@ -140,7 +166,7 @@ class Match
      *
      * @param integer $status
      *
-     * @return Match
+     * @return Game
      */
     public function setStatus($status)
     {
@@ -157,5 +183,85 @@ class Match
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set startedAt
+     *
+     * @param \DateTime $startedAt
+     *
+     * @return Game
+     */
+    public function setStartedAt($startedAt)
+    {
+        $this->startedAt = $startedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get startedAt
+     *
+     * @return \DateTime
+     */
+    public function getStartedAt()
+    {
+        return $this->startedAt;
+    }
+
+    /**
+     * Set homeTeam
+     *
+     * @param \AppBundle\Entity\Team $homeTeam
+     *
+     * @return Game
+     */
+    public function setHomeTeam(\AppBundle\Entity\Team $homeTeam = null)
+    {
+        $this->homeTeam = $homeTeam;
+
+        return $this;
+    }
+
+    /**
+     * Get homeTeam
+     *
+     * @return \AppBundle\Entity\Team
+     */
+    public function getHomeTeam()
+    {
+        return $this->homeTeam;
+    }
+
+    /**
+     * Set guestTeam
+     *
+     * @param \AppBundle\Entity\Team $guestTeam
+     *
+     * @return Game
+     */
+    public function setGuestTeam(\AppBundle\Entity\Team $guestTeam = null)
+    {
+        $this->guestTeam = $guestTeam;
+
+        return $this;
+    }
+
+    /**
+     * Get guestTeam
+     *
+     * @return \AppBundle\Entity\Team
+     */
+    public function getGuestTeam()
+    {
+        return $this->guestTeam;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->startedAt->format('Y-m-d H:i') . ' ' . $this->stadium;
     }
 }

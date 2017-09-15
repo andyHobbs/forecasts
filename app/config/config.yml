@@ -104,3 +104,4 @@ vich_uploader:
         team_logos:
             uri_prefix:         '%app.path.team_logos%'
             upload_destination: '%kernel.root_dir%/../web/uploads/images/team'
+            namer:              vich_uploader.namer_uniqid
