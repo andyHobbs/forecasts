@@ -3,13 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Match Entity
+ * Game Entity
  *
  * @ORM\Table
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GameRepository")
  *
  */
 class Game
@@ -33,14 +34,14 @@ class Game
      *
      * Many Games have One home Team.
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="homeGames")
-     * @ORM\JoinColumn(name="home_team_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="home_team_id", referencedColumnName="id", nullable=false)
      */
     private $homeTeam;
 
     /**
      * Many Games have One guest Team.
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="guestGames")
-     * @ORM\JoinColumn(name="guest_team_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="guest_team_id", referencedColumnName="id", nullable=false)
      */
     private $guestTeam;
 
@@ -78,6 +79,23 @@ class Game
      * @ORM\Column(name="started_at", type="datetime")
      */
     private $startedAt;
+
+    /**
+     * One Game has Many Forecasts.
+     *
+     * @var Forecast[] $forecasts
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Forecast", mappedBy="game")
+     */
+    private $forecasts;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->forecasts = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -263,5 +281,39 @@ class Game
     public function __toString()
     {
         return $this->startedAt->format('Y-m-d H:i') . ' ' . $this->stadium;
+    }
+
+    /**
+     * Add forecast
+     *
+     * @param \AppBundle\Entity\Forecast $forecast
+     *
+     * @return Game
+     */
+    public function addForecast(\AppBundle\Entity\Forecast $forecast)
+    {
+        $this->forecasts[] = $forecast;
+
+        return $this;
+    }
+
+    /**
+     * Remove forecast
+     *
+     * @param \AppBundle\Entity\Forecast $forecast
+     */
+    public function removeForecast(\AppBundle\Entity\Forecast $forecast)
+    {
+        $this->forecasts->removeElement($forecast);
+    }
+
+    /**
+     * Get forecasts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getForecasts()
+    {
+        return $this->forecasts;
     }
 }

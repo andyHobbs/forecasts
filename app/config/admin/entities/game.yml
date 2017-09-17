@@ -18,5 +18,5 @@ easy_admin:
                   - { property: 'homeScore', type: 'number' }
                   - { property: 'guestTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
                   - { property: 'guestScore', type: 'number' }
-                  - { property: 'stadium', type: 'text' }
-                  - { property: 'status', type: 'text' }
+                  - stadium
+                  - { property: 'status', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }

@@ -6,17 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Match Entity
+ * Forecast Entity
  *
- * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Table
+ * @ORM\Entity
  *
  */
 class Forecast
 {
 
     /**
-     * @var integer
+     * @var integer $id
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -25,18 +25,38 @@ class Forecast
     private $id;
 
     /**
-     * @var string
+     * Many Forecasts have One User.
      *
-     * @ORM\Column(name="name", type="integer")
+     * @var User $user
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="forecasts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
-     * @var integer
+     * Many Forecasts have One Game.
      *
-     * @ORM\Column(type="integer")
+     * @var Game $game
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Game", inversedBy="forecasts")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
-    private $match;
+    private $game;
+
+    /**
+     * @var integer $homeScore
+     *
+     * @ORM\Column(name="home_rate", type="integer")
+     */
+    private $homeRate;
+
+    /**
+     * @var integer $guestScore
+     *
+     * @ORM\Column(name="guest_rate", type="integer")
+     */
+    private $guestRate;
 
     /**
      * Get id

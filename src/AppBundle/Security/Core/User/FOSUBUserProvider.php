@@ -4,31 +4,32 @@ namespace AppBundle\Security\Core\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
+use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseProvider;
 
-class FOSUBUserProvider extends BaseClass
+/**
+ * FOSUBUserProvider
+ */
+class FOSUBUserProvider extends BaseProvider
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();
-        //on connect - get the access token and the user ID
-        $service = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($service);
-        $setter_id = $setter . 'Id';
-        $setter_token = $setter . 'AccessToken';
-        //we "disconnect" previously connected users
-        if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
-            $previousUser->$setter_id(null);
-            $previousUser->$setter_token(null);
+
+        /** @var \AppBundle\Entity\User $previousUser */
+        $previousUser = $this->userManager->findUserBy([$property => $username]);
+
+        if (null !== $previousUser) {
+            $previousUser->setFacebookId(null);
+            $previousUser->setFacebookAccessToken(null);
             $this->userManager->updateUser($previousUser);
         }
-        //we connect current user
-        $user->$setter_id($username);
-        $user->$setter_token($response->getAccessToken());
+
+        $user->setFacebookId($username);
+        $user->setFacebookAccessToken($response->getAccessToken());
         $this->userManager->updateUser($user);
     }
 
@@ -38,32 +39,24 @@ class FOSUBUserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username = $response->getUsername();
-        $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
-        //when the user is registrating
+        /** @var \AppBundle\Entity\User $user */
+        $user = $this->userManager->findUserBy([$this->getProperty($response) => $username]);
+
         if (null === $user) {
-            $service = $response->getResourceOwner()->getName();
-            $setter = 'set' . ucfirst($service);
-            $setter_id = $setter . 'Id';
-            $setter_token = $setter . 'AccessToken';
-            // create new user here
             $user = $this->userManager->createUser();
-            $user->$setter_id($username);
-            $user->$setter_token($response->getAccessToken());
-            //I have set all requested data with the user's username
-            //modify here with relevant data
+            $user->setFacebookId($username);
+            $user->setFacebookAccessToken($response->getAccessToken());
             $user->setUsername($response->getFirstName());
             $user->setEmail($response->getEmail());
-            $user->setPassword(hash('sha512', $response->getNickname()));
+            $user->setPassword(hash('bcrypt', $response->getNickname()));
             $user->setEnabled(true);
             $this->userManager->updateUser($user);
             return $user;
         }
-        //if user exists - go with the HWIOAuth way
+
         $user = parent::loadUserByOAuthUserResponse($response);
-        $serviceName = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
-        //update access token
-        $user->$setter($response->getAccessToken());
+        $user->setFacebookAccessToken($response->getAccessToken());
+
         return $user;
     }
 }

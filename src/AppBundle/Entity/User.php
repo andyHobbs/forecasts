@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -27,6 +28,25 @@ class User extends BaseUser
      * @var string
      */
     private $facebookAccessToken;
+
+    /**
+     * One User has Many Forecasts.
+     *
+     * @var Forecast[] $forecasts
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Forecast", mappedBy="user")
+     */
+    private $forecasts;
+
+    /**
+     * User Constructor
+     */
+    public function __construct()
+    {
+        $this->forecasts = new ArrayCollection();
+
+        parent::__construct();
+    }
 
     /**
      * @return integer
@@ -74,4 +94,38 @@ class User extends BaseUser
         return $this->facebookAccessToken;
     }
 
+
+    /**
+     * Add forecast
+     *
+     * @param \AppBundle\Entity\Forecast $forecast
+     *
+     * @return User
+     */
+    public function addForecast(\AppBundle\Entity\Forecast $forecast)
+    {
+        $this->forecasts[] = $forecast;
+
+        return $this;
+    }
+
+    /**
+     * Remove forecast
+     *
+     * @param \AppBundle\Entity\Forecast $forecast
+     */
+    public function removeForecast(\AppBundle\Entity\Forecast $forecast)
+    {
+        $this->forecasts->removeElement($forecast);
+    }
+
+    /**
+     * Get forecasts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getForecasts()
+    {
+        return $this->forecasts;
+    }
 }

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -131,8 +132,8 @@ class Team
      */
     public function __construct()
     {
-        $this->homeMatches = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->guestMatches = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->homeMatches = new ArrayCollection();
+        $this->guestMatches = new ArrayCollection();
     }
 
     /**
