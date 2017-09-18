@@ -4,6 +4,14 @@ easy_admin:
           class: AppBundle\Entity\Game
           label: 'Games'
           form:
+              fields:
+                  - { property: 'startedAt', type: 'datetime', type_options: { 'widget': 'single_text', 'attr': { 'class': 'datepicker'} } }
+                  - { property: 'homeTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
+                  - { property: 'homeScore', type: 'number' }
+                  - { property: 'guestTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
+                  - { property: 'guestScore', type: 'number' }
+                  - stadium
+                  - { property: 'status', type: 'choice', type_options: { choices: { 'Current': 'C', 'Future': 'F', 'Past': 'P' } } }
           list:
               fields:
                   - 'id'
@@ -12,11 +20,3 @@ easy_admin:
                   - 'startedAt'
                   - 'status'
                   - 'stadium'
-              fields:
-                  - { property: 'startedAt', type: 'datetime' }
-                  - { property: 'homeTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
-                  - { property: 'homeScore', type: 'number' }
-                  - { property: 'guestTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
-                  - { property: 'guestScore', type: 'number' }
-                  - stadium
-                  - { property: 'status', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }

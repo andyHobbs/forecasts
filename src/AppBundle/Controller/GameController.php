@@ -2,14 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\DBAL\Types\GameStatusType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * GameController
  *
- * @author Andy Hobbs
+ * @author Andy Hobbs <andyhobbs92@gmail.com>
  */
 class GameController extends Controller
 {
@@ -20,14 +20,14 @@ class GameController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository('AppBundle:Game');
 
-        $currentGames = $repository->getByStatus(1);
-        $pastGames = $repository->getByStatus(2);
-        $futureGames = $repository->getByStatus(3);
+        $currentGames = $repository->getByStatus(GameStatusType::CURRENT);
+        $futureGames = $repository->getByStatus(GameStatusType::FUTURE);
+        $pastGames = $repository->getByStatus(GameStatusType::PAST);
 
         return $this->render('AppBundle:game:index.html.twig', [
             'currentGames' => $currentGames,
-            'pastGames' => $pastGames,
-            'futureGames' => $futureGames
+            'futureGames'  => $futureGames,
+            'pastGames'    => $pastGames
         ]);
     }
 }

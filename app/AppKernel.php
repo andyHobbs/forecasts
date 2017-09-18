@@ -20,6 +20,8 @@ class AppKernel extends Kernel
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new SC\DatetimepickerBundle\SCDatetimepickerBundle(),
+            new Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

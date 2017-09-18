@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Game;
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -23,6 +24,7 @@ class GameRepository extends EntityRepository
 
         return $qb->where($qb->expr()->eq('g.status', ':status'))
             ->setParameter('status', $status)
+            ->orderBy('g.startedAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

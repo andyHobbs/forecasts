@@ -36,7 +36,9 @@
         "symfony/workflow": "^3.3",
         "twig/twig": "^1.0||^2.0",
         "twitter/bootstrap-bundle": "*",
-        "vich/uploader-bundle": "^1.6"
+        "vich/uploader-bundle": "^1.6",
+        "stephanecollot/datetimepicker-bundle": "dev-master",
+        "fresh/doctrine-enum-bundle": "~5.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

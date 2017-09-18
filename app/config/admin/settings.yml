@@ -1,2 +1,6 @@
 easy_admin:
     site_name: 'FORECASTS'
+    design:
+        assets:
+            js: ['bundles/scdatetimepicker/js/bootstrap-datetimepicker.min.js', 'admin/js/easyAdmin.js']
+            css: ['bundles/scdatetimepicker/css/datetimepicker.css']

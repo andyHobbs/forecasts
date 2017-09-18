@@ -52,6 +52,8 @@ doctrine:
         user: '%database_user%'
         password: '%database_password%'
         charset: UTF8
+        types:
+          BasketballPositionType: AppBundle\DBAL\Types\GameStatusType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
@@ -103,5 +105,8 @@ vich_uploader:
     mappings:
         team_logos:
             uri_prefix:         '%app.path.team_logos%'
-            upload_destination: '%kernel.root_dir%/../web/uploads/images/team'
+            upload_destination: '%kernel.project_dir%/web/uploads/images/team'
             namer:              vich_uploader.namer_uniqid
+
+sc_datetimepicker:
+    picker: ~

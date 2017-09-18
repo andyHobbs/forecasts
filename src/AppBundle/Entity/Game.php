@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * Game Entity
@@ -67,9 +68,8 @@ class Game
     private $stadium;
 
     /**
-     * @var integer $status
-     *
-     * @ORM\Column(name="status", type="smallint")
+     * @ORM\Column(name="status", type="string", nullable=false)
+     * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GameStatusType")
      */
     private $status;
 
