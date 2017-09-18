@@ -19,6 +19,7 @@ class GameController extends Controller
     public function indexAction()
     {
         $repository = $this->getDoctrine()->getRepository('AppBundle:Game');
+        //$user = $this->getUser();
 
         $currentGames = $repository->getByStatus(GameStatusType::CURRENT);
         $futureGames = $repository->getByStatus(GameStatusType::FUTURE);

@@ -7,9 +7,9 @@ easy_admin:
               fields:
                   - { property: 'startedAt', type: 'datetime', type_options: { 'widget': 'single_text', 'attr': { 'class': 'datepicker'} } }
                   - { property: 'homeTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
-                  - { property: 'homeScore', type: 'number' }
+                  - { property: 'homeScore', type: 'integer', type_options: { attr: { min: 0 } } }
                   - { property: 'guestTeam', type: 'easyadmin_autocomplete', type_options: { class: 'AppBundle\Entity\Team' } }
-                  - { property: 'guestScore', type: 'number' }
+                  - { property: 'guestScore', type: 'integer', type_options: { attr: { min: 0 } } }
                   - stadium
                   - { property: 'status', type: 'choice', type_options: { choices: { 'Current': 'C', 'Future': 'F', 'Past': 'P' } } }
           list:

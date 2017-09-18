@@ -51,14 +51,14 @@ class Game
      *
      * @ORM\Column(name="home_score", type="integer", nullable=true)
      */
-    private $homeScore;
+    private $homeScore = 0;
 
     /**
      * @var integer $guestScore
      *
      * @ORM\Column(name="guest_score", type="integer", nullable=true)
      */
-    private $guestScore;
+    private $guestScore = 0;
 
     /**
      * @var string $stadium
@@ -68,7 +68,7 @@ class Game
     private $stadium;
 
     /**
-     * @ORM\Column(name="status", type="string", nullable=false)
+     * @ORM\Column(name="status", type="GameStatusType", nullable=false)
      * @DoctrineAssert\Enum(entity="AppBundle\DBAL\Types\GameStatusType")
      */
     private $status;
