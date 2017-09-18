@@ -68,5 +68,99 @@ class Forecast
         return $this->id;
     }
 
+    /**
+     * Set homeRate
+     *
+     * @param integer $homeRate
+     *
+     * @return Forecast
+     */
+    public function setHomeRate($homeRate)
+    {
+        $this->homeRate = $homeRate;
 
+        return $this;
+    }
+
+    /**
+     * Get homeRate
+     *
+     * @return integer
+     */
+    public function getHomeRate()
+    {
+        return $this->homeRate;
+    }
+
+    /**
+     * Set guestRate
+     *
+     * @param integer $guestRate
+     *
+     * @return Forecast
+     */
+    public function setGuestRate($guestRate)
+    {
+        $this->guestRate = $guestRate;
+
+        return $this;
+    }
+
+    /**
+     * Get guestRate
+     *
+     * @return integer
+     */
+    public function getGuestRate()
+    {
+        return $this->guestRate;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Forecast
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set game
+     *
+     * @param \AppBundle\Entity\Game $game
+     *
+     * @return Forecast
+     */
+    public function setGame(\AppBundle\Entity\Game $game = null)
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
+    /**
+     * Get game
+     *
+     * @return \AppBundle\Entity\Game
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
 }
