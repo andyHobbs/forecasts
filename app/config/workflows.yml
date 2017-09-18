@@ -1,0 +1,20 @@
+framework:
+    workflows:
+        game:
+            type: 'workflow'
+            marking_store:
+                type: 'single_state'
+                argument: 'currentPlace'
+            supports:
+                - AppBundle\Entity\Game
+            places:
+                - future
+                - current
+                - past
+            transitions:
+                begin:
+                    from: future
+                    to: current
+                cancel:
+                    from: current
+                    to: past
