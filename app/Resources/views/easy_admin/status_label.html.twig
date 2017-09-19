@@ -1,0 +1,9 @@
+{% if value == 'CURRENT'|enum_constant %}
+    <span class="label label-primary">{{ value|readable_enum }}</span>
+{% endif %}
+{% if value == 'PAST'|enum_constant %}
+    <span class="label label-success">{{ value|readable_enum }}</span>
+{% endif %}
+{% if value == 'FUTURE'|enum_constant %}
+    <span class="label label-info">{{ value|readable_enum }}</span>
+{% endif %}

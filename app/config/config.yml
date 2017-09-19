@@ -110,3 +110,6 @@ vich_uploader:
 
 sc_datetimepicker:
     picker: ~
+
+cmen_google_charts:
+    version: "current"

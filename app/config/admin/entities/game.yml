@@ -2,6 +2,7 @@ easy_admin:
     entities:
         Game:
           class: AppBundle\Entity\Game
+          controller: AppBundle\Controller\Admin\GameController
           label: 'Games'
           form:
               fields:
@@ -13,10 +14,12 @@ easy_admin:
                   - stadium
                   - { property: 'status', type: 'choice', type_options: { choices: { 'Current': 'C', 'Future': 'F', 'Past': 'P' } } }
           list:
+              actions:
+                  - { name: 'statistics', icon: 'pie-chart', label: '' }
               fields:
                   - 'id'
                   - 'homeTeam'
                   - 'guestTeam'
                   - 'startedAt'
-                  - 'status'
+                  - { property: 'status', template: 'status_label.html.twig' }
                   - 'stadium'
