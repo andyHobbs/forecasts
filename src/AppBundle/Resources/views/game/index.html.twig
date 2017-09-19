@@ -59,7 +59,7 @@
                         {% if app.user %}
                             <small class="text-muted">You're forecast:</small>
                             <h4>{{ game|rate(game, app.user) }}</h4>
-                            <a class="btn btn-outline-secondary mt-0" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" href="javascript:void(0)">+</a>
+                            <a class="btn btn-outline-secondary mt-0" data-toggle="modal" data-target="#exampleModal" data-game="{{ game.id }}" href="javascript:void(0)">+</a>
                         {% endif %}
                     </div>
                 </div>
@@ -92,7 +92,8 @@
     </div>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -101,30 +102,36 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form action="{{ path('ajax_new_rate') }}" method="post" id="rateForm">
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-xs-6 col-sm-6">
                                 <div class="form-group">
-                                    <label for="home-rate" class="form-control-label">Home:</label>
-                                    <input type="number" class="form-control" id="home-rate">
+                                    {{ form_label(form.homeRate) }}
+                                    {{ form_widget(form.homeRate) }}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6">
                                 <div class="form-group">
-                                    <label for="guest-rate" class="form-control-label">Guest:</label>
-                                    <input type="number" class="form-control" id="guest-rate">
+                                    {{ form_label(form.guestRate) }}
+                                    {{ form_widget(form.guestRate) }}
                                 </div>
                             </div>
+                            <input type="hidden" class="game-attr" name="game">
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Set</button>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        {{ form_widget(form.submit) }}
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('scripts/rate-logic.js') }}"></script>
 {% endblock %}
